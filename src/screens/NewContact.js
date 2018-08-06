@@ -11,9 +11,9 @@ import { connect } from "react-redux";
 
 import ContactForm from "../components/ContactForm";
 import { save } from "../reducers/contact";
+import { add } from "../reducers/contacts";
 
 import Notification from "../components/notification/Notification";
-import { reset } from 'ansi-colors';
 
 const { height } = Dimensions.get("screen");
 
@@ -23,20 +23,23 @@ class NewContact extends React.Component {
   }
   
   submitHandler(values) {
-    const contact = values.toJS();
+    const data = values.toJS();
+    data.phones = [];
 
-    console.warn(this.props)
-
-    this.props.save(contact)
+    this.props.save(data)
       .then((res) => {
         if(res.error) {
           throw new Error(res)
         }
-        
-        return res;
-      })
-      .then(() => Notification.show(null, "Contact saved successfully."))
-      .catch((err) => Notification.show(null, "Couldn't save the contact"));
+
+        const data = res.payload.data;
+
+        return data.payload.contact;
+      }).then((contact) => this.props.add(contact))
+        .then(() => {
+        Notification.show(null, "Contact saved successfully.");
+        this.props.navigation.pop();
+      }).catch((err) => Notification.show(null, "Couldn't save the contact"));
   }
 
   render() {
@@ -71,7 +74,8 @@ class NewContact extends React.Component {
   }
 
   const mapDispatchToProps = {
-    save
+    add,
+    save,
   }
 
   export default connect(mapStateToProps, mapDispatchToProps)(NewContact);

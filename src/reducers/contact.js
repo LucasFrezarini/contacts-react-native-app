@@ -1,4 +1,4 @@
-import { Map } from "immutable";
+import { Map, List } from "immutable";
 
 export const types = {
   SAVE: "contact/SAVE",
@@ -11,6 +11,7 @@ const initialState = new Map({
     email: "",
     firstName: "",
     lastName: "",
+    phones: new List()
   })
 })
 

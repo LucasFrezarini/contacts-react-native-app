@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 
 import { reduxForm, Field } from "redux-form/immutable";
-import CustomInput from "./CustomInput";
 import FormInput from "./FormInput";
 
 import PropTypes from "prop-types";
@@ -30,6 +29,7 @@ class ContactForm extends React.Component {
           name="firstName"
           component={FormInput}
           placeholder="Type the contact's first name..."
+          
         ></Field>
         <Text>Last Name</Text>
         <Field

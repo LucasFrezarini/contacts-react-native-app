@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 import { load } from "../reducers/contacts";
 
 import ContactItem from "../components/ContactItem";
-import CustomInput from "../components/CustomInput";
 
 const { height } = Dimensions.get("screen");
 
@@ -33,22 +32,15 @@ class Contacts extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={{flex: 1}}>
         <View style={styles.container}>
-          <View style={styles.searchContainer}>
-            <CustomInput
-              placeholder="Search for contacts..."
-              placeholderTextColor="#fff"
-              style={styles.search}
-            />
-          </View>
           <FlatList
             style={styles.contacts}
             data={this.props.contacts.get("list")}
             keyExtractor={(item) => item._id}
             renderItem={({item}) =>
               <ContactItem
-                name={item.firstName}
+                name={`${item.firstName} ${item.lastName}`}
                 phone={item.phones.length > 0 ? item.phones[0].number : null}
               />
             }
@@ -67,20 +59,14 @@ class Contacts extends React.Component {
   
   const styles = StyleSheet.create({
     container: {
+      flex: 1,
       backgroundColor: "#311b92",
-      minHeight: height,
-      zIndex: 1
+      minHeight: height - 150,
+      zIndex: 1,
     },
     contacts: {
-      backgroundColor: "#fff"
-    },
-    search: {
-      margin: 15,
-      height: 40,
-      fontSize: 16,
-      borderBottomWidth: 1,
-      borderBottomColor: "#bbb",
-      color: "#fff",
+      backgroundColor: "#fff",
+      flex: 1,
     },
     addButton: {
       height: 55,
@@ -89,9 +75,9 @@ class Contacts extends React.Component {
       alignItems: "center",
       justifyContent: "center",
       position: "absolute",
-      bottom: 145,
+      bottom: 20,
       right: 20,
-      borderRadius: 60,
+      borderRadius: 30,
       zIndex: 1000,
     },
     addButtonText: {

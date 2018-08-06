@@ -1,13 +1,14 @@
-import { Map } from "immutable";
+import { Map, List } from "immutable";
 
 export const types = {
   LOAD: "contacts/LOAD",
   LOAD_SUCCESS: "contacts/LOAD_SUCCESS",
-  LOAD_FAIL: "contacts/LOAD_FAIL"
+  LOAD_FAIL: "contacts/LOAD_FAIL",
+  ADD: "contacts/ADD"
 };
 
 const initialState = new Map({
-  list: [],
+  list: new List(),
   loading: false,
 })
 
@@ -19,6 +20,12 @@ export default function reducer(state = initialState, action) {
       return state.set("list", action.payload.data);
     case types.LOAD_FAIL:
       return state.set("loading", false);
+      case types.ADD: {
+        const actualList = state.get("list");
+        const contact = action.contact;
+  
+        return state.set("list", actualList.concat(contact));
+    }
     default:
       return state;
   }
@@ -33,4 +40,11 @@ export function load() {
       }
     }
   };
+}
+
+export function add(contact) {
+  return {
+    type: types.ADD,
+    contact
+  }
 }

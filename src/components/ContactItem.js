@@ -34,6 +34,7 @@ class ContactItem extends React.Component {
   
   const styles = StyleSheet.create({
     contactContainer: {
+      flex: 1,
       padding: 3,
       borderBottomWidth: 1,
       borderBottomColor: "#bbb",
