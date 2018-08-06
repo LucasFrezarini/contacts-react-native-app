@@ -4,6 +4,7 @@ import {
   Text, 
   View,
   Image,
+  TouchableOpacity
 } from 'react-native';
 
 import PropTypes from "prop-types";
@@ -11,7 +12,10 @@ import PropTypes from "prop-types";
 class ContactItem extends React.Component {
     render() {
       return (
-          <View style={styles.contactsList}>
+        <View>
+          <TouchableOpacity 
+            style={styles.contactsList}
+          >
             <View style={styles.contactContainer}>
               <Image
                 style={styles.contactPhoto}
@@ -22,31 +26,21 @@ class ContactItem extends React.Component {
                 <Text>{this.props.phone}</Text>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
+        </View>
       );
     }
   }
   
   const styles = StyleSheet.create({
-    container: {
-      
-    },
-    search: {
-      margin: 15,
-      height: 40,
-      fontSize: 16,
-      borderBottomWidth: 1,
-      borderBottomColor: "#bbb",
-    },
     contactContainer: {
       padding: 3,
       borderBottomWidth: 1,
       borderBottomColor: "#bbb",
-      backgroundColor: "#fff",
       height: 77,
       justifyContent: "center",
       alignItems: "center",
-      flexDirection: "row"
+      flexDirection: "row",
     },
     contactDescription: {
       flex: 2,
@@ -60,7 +54,7 @@ class ContactItem extends React.Component {
 
   ContactItem.propTypes = {
     name: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
+    phone: PropTypes.string,
   }
 
   export default ContactItem;
