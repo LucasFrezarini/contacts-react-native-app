@@ -13,7 +13,7 @@ import React from "react";
 import reducers from "./src/reducers/root";
 
 const client = axios.create({
-  baseURL: "http://192.168.0.20:3400/api",
+  baseURL: "http://192.168.1.165:3400/api",
   responseType: "json",
 });
 

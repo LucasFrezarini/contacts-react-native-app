@@ -10,6 +10,7 @@ export const types = {
 const initialState = new Map({
   list: new List(),
   loading: false,
+  error: false
 })
 
 export default function reducer(state = initialState, action) {
@@ -18,8 +19,14 @@ export default function reducer(state = initialState, action) {
       return state.set("loading", true);
     case types.LOAD_SUCCESS:
       return state.set("list", action.payload.data);
-    case types.LOAD_FAIL:
-      return state.set("loading", false);
+    case types.LOAD_FAIL: {
+      const newState = state.merge({
+        loading: false,
+        error: true,
+      });
+      
+      return newState;
+    }
       case types.ADD: {
         const actualList = state.get("list");
         const contact = action.contact;

@@ -11,37 +11,38 @@ import FormInput from "./FormInput";
 
 import PropTypes from "prop-types";
 
+const required = (v) => v ? undefined : "Required"
+
 class ContactForm extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const formStates = ['asyncValidating', 'dirty', 'pristine', 'valid', 'invalid', 'submitting',
-    'submitSucceeded', 'submitFailed'];
-
     const { handleSubmit } = this.props;
 
     return (
       <ScrollView style={styles.container}>
-        <Text>First Name</Text>
         <Field
           name="firstName"
           component={FormInput}
           placeholder="Type the contact's first name..."
-          
+          validate={required}
+          label="First Name"
         ></Field>
-        <Text>Last Name</Text>
         <Field
           name="lastName"
           component={FormInput}
           placeholder="Type the contact's last name..."
+          validate={required}
+          label="Last Name"
         ></Field>
-        <Text>Email</Text>
         <Field
           name="email"
           component={FormInput}
           placeholder="Type the contact's email..."
+          validate={required}
+          label="Email"
         ></Field>
 
         <TouchableOpacity 

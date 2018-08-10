@@ -22,24 +22,28 @@ class NewContact extends React.Component {
     title: "New Contact"
   }
   
-  submitHandler(values) {
-    const data = values.toJS();
-    data.phones = [];
+  async submitHandler(values) {
+    try {
+      const data = values.toJS();
+      data.phones = [];
 
-    this.props.save(data)
-      .then((res) => {
-        if(res.error) {
-          throw new Error(res)
-        }
-
-        const data = res.payload.data;
-
-        return data.payload.contact;
-      }).then((contact) => this.props.add(contact))
-        .then(() => {
-        Notification.show(null, "Contact saved successfully.");
-        this.props.navigation.pop();
-      }).catch((err) => Notification.show(null, "Couldn't save the contact"));
+      const res = await this.props.save(data);
+      
+      if(res.error) {
+        throw new Error(res);
+      }
+  
+      const responseData = res.payload.data;
+      const contact =  responseData.payload.contact;
+        
+      await this.props.add(contact);
+  
+      Notification.show(null, "Contact saved successfully.");
+      this.props.navigation.pop();
+    } catch (error) {
+      Notification.show(null, "Couldn't save the contact");
+      console.error(error);
+    }
   }
 
   render() {

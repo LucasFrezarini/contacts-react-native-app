@@ -30,21 +30,33 @@ class Contacts extends React.Component {
     this.props.navigation.push("NewContact")
   }
 
+  renderList() {
+    if(!this.props.error) {
+      return (
+        <FlatList
+          style={styles.contacts}
+          data={this.props.contacts.get("list")}
+          keyExtractor={(item) => item._id}
+          renderItem={({item}) =>
+            <ContactItem
+              name={`${item.firstName} ${item.lastName}`}
+              phone={item.phones.length > 0 ? item.phones[0].number : null}
+            />
+          }
+        />
+      )
+    } else {
+      return (
+        <Text>Deu ruim</Text>
+      )
+    }
+  }
+
   render() {
     return (
       <View style={{flex: 1}}>
         <View style={styles.container}>
-          <FlatList
-            style={styles.contacts}
-            data={this.props.contacts.get("list")}
-            keyExtractor={(item) => item._id}
-            renderItem={({item}) =>
-              <ContactItem
-                name={`${item.firstName} ${item.lastName}`}
-                phone={item.phones.length > 0 ? item.phones[0].number : null}
-              />
-            }
-          />
+          {this.renderList()}
           <TouchableOpacity 
             onPress={this.add.bind(this)}
             style={styles.addButton}
